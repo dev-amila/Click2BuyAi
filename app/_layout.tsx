@@ -12,8 +12,9 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-function clamp(val, min, max) {
+function clamp(val: number, min: number, max: number) {
   return Math.min(Math.max(val, min), max);
 }
 
@@ -56,10 +57,12 @@ export default function RootLayout() {
     })
     .runOnJS(true);
   return (
-    <GestureHandlerRootView style={styles.container}>
-      {/* <View> */}
+    <GestureHandlerRootView>
+      <SafeAreaView style={styles.container}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" options={{ title: "Home" }} />
+        {/* <Stack.Screen name="Products" component={ProductListScreen} />
+        <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} /> */}
       </Stack>
       <GestureDetector gesture={pan} >
         <Animated.View style={[animatedStyles, styles.box]}>
@@ -72,11 +75,11 @@ export default function RootLayout() {
             placeholder="useless placeholder"
             keyboardType="numeric"
           />
-          <Link href={"/about_us"}>About us </Link>
+          <Link href={"/products"}>products</Link>
           <Link href={"/"}>Home </Link>
         </Animated.View>
       </GestureDetector>
-      {/* </View> */}
+      </SafeAreaView>
     </GestureHandlerRootView>
   );
 }
@@ -84,29 +87,28 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin:'1rem',
+    margin: 16, // instead of '1rem'
   },
   box: {
-    display: 'inline-flex',        // Use inline-flex to shrink-wrap
-    padding: '1rem',
+    position:'absolute',
+    padding: 16, // instead of '1rem'
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#b58df1',
     borderRadius: 20,
-    width: 'fit-content',          // Optional: lets width match content
-    height: 'fit-content',         // Optional: lets height match content
+    bottom:0,
+    right:50
   },
-
   title: {
     color: 'white',
-    fontWeight: 500,
+    fontWeight: '500', // use string for fontWeight
   },
   input: {
-    border: '1px solid white',
-    padding: '1rem',
-    borderRadius: '1rem',
-    marginTop: '1rem',
-    color: 'white'
+    borderWidth: 1,
+    borderColor: 'white',
+    padding: 16, // instead of '1rem'
+    borderRadius: 16, // instead of '1rem'
+    marginTop: 16, // instead of '1rem'
+    color: 'white',
   }
-
 });
